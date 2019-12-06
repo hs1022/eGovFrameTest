@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.dao.UsrMapper">
+	
+		<resultMap id="UsrVO" type="egovframework.example.vo.UsrVO">
+		<result property="usr_id" column="usr_id"/>
+		<result property="usr_nm" column="usr_nm"/>
+		</resultMap>
+
+
+	<select id="selectUsrList" resultMap="UsrVO">
+
+			SELECT
+				usr_id,usr_nm
+			FROM om001
+
+	</select>
+
+	
+
+</mapper>
