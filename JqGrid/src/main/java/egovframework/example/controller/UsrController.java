@@ -3,6 +3,7 @@ package egovframework.example.controller;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,7 @@ import com.google.gson.Gson;
 
 import egovframework.example.service.UsrService;
 import egovframework.example.vo.UsrList;
+import egovframework.example.vo.UsrVO;
 
 
 @Controller
@@ -53,14 +55,15 @@ public class UsrController {
 //		return "usr/list";
 //	}
 //	
-//	@RequestMapping("/detail")
-//	public String detailList(String usr_id,Model model) {
-//		UsrVO dto = usrService.detailList(usr_id);
-//		model.addAttribute("dto",dto);
-//		System.out.println(dto);
-//		return "usr/detail";
-//	}
-//	
+	@RequestMapping(value="/detail", produces="application/json;charset=UTF-8")
+	public String selectData(String usr_id,Model model) {
+//		String json = new Gson().toJson(new UsrList(usrService.selectData(usr_id)));
+//		System.out.println("json"+json);
+		UsrVO dto = usrService.selectData(usr_id);
+		model.addAttribute("dto",dto);
+		System.out.println(dto.toString());
+		return "usr/usrList";
+	}
 
 
 	

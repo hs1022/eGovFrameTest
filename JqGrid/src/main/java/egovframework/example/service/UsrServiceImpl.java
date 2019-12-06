@@ -17,8 +17,12 @@ public class UsrServiceImpl implements UsrService {
 	
 	@Override
 	public List<UsrVO> selectUsrList() {
-		// TODO Auto-generated method stub
 		return dao.selectUsrList();
+	}
+
+	@Override
+	public UsrVO selectData(String usr_id) {
+		return dao.selectData(usr_id);
 	}
 
 }

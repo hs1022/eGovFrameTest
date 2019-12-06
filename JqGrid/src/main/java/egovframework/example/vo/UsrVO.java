@@ -16,4 +16,9 @@ public class UsrVO {
 		this.usr_nm = usr_nm;
 	}
 	
+	@Override
+	public String toString() {
+		return "UsrVO [usr_id=" + usr_id + ", usr_nm=" + usr_nm + "]";
+	}
+	
 }

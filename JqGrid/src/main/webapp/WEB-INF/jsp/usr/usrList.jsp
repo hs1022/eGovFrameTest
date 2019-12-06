@@ -9,8 +9,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>article</title>
-    <!-- jqGrid -->
+    <title>usrList</title>
+    <!-- jqGrid usrList-->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jquery-ui-custom/jquery-ui.css" type="text/css"/>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqgrid/css/ui.jqgrid.css" type="text/css"/>
 		
@@ -61,11 +61,13 @@ $(document).ready(function () {
         
       	//event handling
         onSelectRow: function(id){
-            var usr_id = $(this).jqGrid ('getCell', id, 'usr_id');
-//             location.href = "/articles/"+ usr_id;
+            var usr_id = $(this).jqGrid('getCell', id, 'usr_id');
+            var usr_nm = $(this).jqGrid('getCell', id, 'usr_nm');
+//             alert(usr_id+usr_nm);
+//             location.href = "/detail.do/"+ usr_id;
 			$.ajax({
 			    type : "GET",
-			    url : "detail.do?id="+usr_id,
+			    url : "detail.do?usr_id="+usr_id,
 			    dataType : "text",
 			    error : function(){
 			        alert('통신실패!!');
@@ -73,6 +75,8 @@ $(document).ready(function () {
 			    success : function(data){
 // 			        alert("통신데이터 값 : " + data) ;
 			        $("#dataArea").html(data) ;
+// 			        $("#usr_id").val(data.usr_id);
+// 			        $("#usr_nm").val(data.usr_nm);
 			    }
 			     
 			});
@@ -120,9 +124,28 @@ $(document).ready(function () {
 //     function formatLink(cellValue, options, rowObject) {
 //         return "<a href='" + cellValue + "'>" + cellValue.substring(0, 25) + "..." + "</a>";
 //     };
+
 });
 
 </script>
-<div id="dataArea"></div>
+<!-- <div id="dataArea"> -->
+<table id="dataArea" border="1">
+
+				<tr>
+					<td>아이디</td>
+					<td>
+						<input type="text" name="usr_id" id="usr_id" value="${dto.usr_id}" maxlength="20">
+					</td>
+					<td>이름</td>
+					<td>
+						<input type="text" id="usr_nm" name="usr_nm" value="${dto.usr_nm}" maxlength="160">
+					</td>
+				</tr>
+
+</table>
+
+
+</table>
+<!-- </div> -->
 </body>
 </html>

@@ -9,13 +9,18 @@
 
 
 	<select id="selectUsrList" resultMap="UsrVO">
-
 			SELECT
 				usr_id,usr_nm
 			FROM om001
-
 	</select>
 
-	
+	<select id="selectData" resultMap="UsrVO">
+
+		SELECT * FROM
+		om001
+		WHERE
+		usr_id=#{usr_id}
+
+	</select>
 
 </mapper>
