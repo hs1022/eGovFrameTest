@@ -31,6 +31,7 @@
 <script type="text/javascript">
 $(document).ready(function () {
     $("#jqGrid").jqGrid({
+    	url: "usrListData.do",
         colModel: [
             {
                 label: '아이디',
@@ -47,26 +48,31 @@ $(document).ready(function () {
         width: 780,
         height: 200,
         rowNum: 10, //한 페이지에 보여줄 갯수
-        datatype: 'local',
-//         datatype: 'json',
-//    		jsonReader : {
-//         root: "rows",
+        rowList:[10,20,30],
+	   	pager: '#jqGridPager',
+//         datatype: 'local',
+        datatype: 'json',
+   		jsonReader : {
+        root: "rows",
 //         page: "page",
 //         total: "total",
 //         records: "records",
-//         repeatitems: false
-//    		},
-        pager: "#jqGridPager",
+        "page":"paginationInfo.currentPageNo",
+        "total":"paginationInfo.totalPageCount",
+        "records":"paginationInfo.totalRecordCount",
+        repeatitems: false
+   		},
         caption: "jqGrid",
         
       	//event handling
+      	//click event
         onSelectRow: function(id){
             var usr_id = $(this).jqGrid('getCell', id, 'usr_id');
             var usr_nm = $(this).jqGrid('getCell', id, 'usr_nm');
 //             alert(usr_id+usr_nm);
 //             location.href = "/detail.do/"+ usr_id;
 			$.ajax({
-			    type : "GET",
+			    type : "get",
 			    url : "detail.do?usr_id="+usr_id,
 			    dataType : "text",
 			    error : function(){
@@ -74,13 +80,14 @@ $(document).ready(function () {
 			    },
 			    success : function(data){
 // 			        alert("통신데이터 값 : " + data) ;
-			        $("#dataArea").html(data) ;
+			        $("#dataArea").html(data);
 // 			        $("#usr_id").val(data.usr_id);
 // 			        $("#usr_nm").val(data.usr_nm);
 			    }
 			     
 			});
         }
+   		
     });
     fetchGridData();
     function fetchGridData() {
@@ -111,6 +118,9 @@ $(document).ready(function () {
                 $("#jqGrid").jqGrid('setGridParam', { data: gridArrayData});
                 */
                 $("#jqGrid").jqGrid('setGridParam', { data: result.rows});
+                $("#jqGrid").jqGrid('setGridParam', { data: result.records});
+                $("#jqGrid").jqGrid('setGridParam', { data: result.page});
+                $("#jqGrid").jqGrid('setGridParam', { data: result.total});
                 // hide the show message
                 // $("#jqGrid")[0].grid.endReq();
                 // refresh the grid

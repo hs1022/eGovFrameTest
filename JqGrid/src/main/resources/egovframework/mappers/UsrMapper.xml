@@ -5,6 +5,11 @@
 		<resultMap id="UsrVO" type="egovframework.example.vo.UsrVO">
 		<result property="usr_id" column="usr_id"/>
 		<result property="usr_nm" column="usr_nm"/>
+		<result property="rows" column="rows"/>
+		<result property="page" column="page"/>
+		<result property="pageNumber" column="pageNumber"/>
+		<result property="totalTotCnt" column="totalTotCnt"/>
+		<result property="totalPage" column="totalPage"/>
 		</resultMap>
 
 
@@ -13,6 +18,7 @@
 				usr_id,usr_nm
 			FROM om001
 	</select>
+	
 
 	<select id="selectData" resultMap="UsrVO">
 
@@ -22,5 +28,38 @@
 		usr_id=#{usr_id}
 
 	</select>
+	
+	<select id="selectBoardCount" resultType="int">
+		SELECT count(*) cnt 
+		FROM om001
+	</select>
+	
+	<select id="selectJqgridList" resultMap="UsrVO">
+        SELECT  a.*
+          FROM  (
+            SELECT  a.*,
+                    ROWNUM rnum,
+                    FLOOR((ROWNUM - 1) /#{rows} + 1) pageNumber
+              FROM  (
+                    SELECT  usr_id,
+                    usr_nm
+                      FROM om001
+                     WHERE 1=1
+                    ) a
+                ) a
+           WHERE  a.pageNumber = #{page}
+        order by a.rnum
+    </select>
+    
+    <select id="selectJqgridListCnt" resultMap="UsrVO">
+        SELECT  count(*) totalTotCnt
+              , CEIL(count(*) / #{rows}) totalPage
+          FROM  om001
+          WHERE  1=1
+    </select>
+
+	
+	
+	
 
 </mapper>
